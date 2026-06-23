@@ -1,7 +1,6 @@
 import streamlit as st
 from analysis import *
 import time
-import matplotlib.pyplot as plt
 
 
 # cấu hình gồm title, icon với layout
@@ -49,7 +48,7 @@ if uploaded_file is not None:
 
 
     # lọc học sinh
-    threshold = st.slider("Lọc điểm số học sinh", 0, 10, )
+    threshold = st.slider("Lọc điểm số học sinh", 0, 10, 0)
     filter_students = data[data['Điểm số'] >= threshold]
 
     st.markdown(f"#### Danh sách học sinh có điểm số từ {threshold} trở lên")
