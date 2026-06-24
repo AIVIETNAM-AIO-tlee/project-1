@@ -8,11 +8,20 @@ import streamlit as st
 if os.name == "nt":
     os.environ["JAVA_HOME"] = r"C:\Program Files\Java\jre-1.8"
 
-if not os.path.exists("VnCoreNLP/models"):
-    py_vncorenlp.download_model(save_dir="VnCoreNLP")
+# if not os.path.exists("VnCoreNLP/models"):
+#     py_vncorenlp.download_model(save_dir="VnCoreNLP")
 
-BASE_DIR = os.path.dirname(os.path.abspath("project-1-1/"))
+# BASE_DIR = os.path.dirname(os.path.abspath("project-1-1/"))
+# VNCORENLP_DIR = os.path.join(BASE_DIR, "VnCoreNLP")
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 VNCORENLP_DIR = os.path.join(BASE_DIR, "VnCoreNLP")
+MODELS_DIR = os.path.join(VNCORENLP_DIR, "models")
+
+# 3. Tự động tải model nếu chưa tồn tại
+if not os.path.exists(MODELS_DIR):
+    os.makedirs(VNCORENLP_DIR, exist_ok=True)
+    py_vncorenlp.download_model(save_dir=VNCORENLP_DIR)
 
 @st.cache_resource
 def load_model():
