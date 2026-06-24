@@ -7,7 +7,8 @@ import streamlit as st
 # Cấu hình môi trường cho Java, tùy mng set java
 os.environ["JAVA_HOME"] = r"C:\Program Files\Java\jre-1.8"
 
-py_vncorenlp.download_model(save_dir='VnCoreNLP/models')
+if not os.path.exists("VnCoreNLP/models"):
+    py_vncorenlp.download_model(save_dir="VnCoreNLP")
 
 BASE_DIR = os.path.dirname(os.path.abspath("project-1-1/"))
 VNCORENLP_DIR = os.path.join(BASE_DIR, "VnCoreNLP")
