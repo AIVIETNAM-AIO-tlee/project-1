@@ -9,9 +9,7 @@ BASE_DIR = os.path.dirname(CURR_DIR)
 VNCORENLP_DIR = os.path.join(BASE_DIR, "vncorenlp/VnCoreNLP")
 MODELS_DIR = os.path.join(VNCORENLP_DIR, "models")
 
-if not os.path.exists(MODELS_DIR):
-    os.makedirs(MODELS_DIR, exist_ok=True)
-    py_vncorenlp.download_model(save_dir=VNCORENLP_DIR)
+py_vncorenlp.download_model(save_dir=VNCORENLP_DIR)
 
 if os.name == "nt":
     os.environ["JAVA_HOME"] = r"C:\Program Files\Java\jre-1.8"
