@@ -1,3 +1,5 @@
+import shutil
+
 from gtts import gTTS
 from py_vncorenlp import VnCoreNLP
 import py_vncorenlp
@@ -9,13 +11,20 @@ BASE_DIR = os.path.dirname(CURR_DIR)
 VNCORENLP_DIR = os.path.join(BASE_DIR, "vncorenlp/VnCoreNLP")
 MODELS_DIR = os.path.join(VNCORENLP_DIR, "models")
 
-py_vncorenlp.download_model(save_dir=VNCORENLP_DIR)
+# py_vncorenlp.download_model(save_dir=VNCORENLP_DIR)
 
 if os.name == "nt":
     os.environ["JAVA_HOME"] = r"C:\Program Files\Java\jre-1.8"
 
 @st.cache_resource
 def load_model():
+    os.makedirs(VNCORENLP_DIR, exist_ok=True)
+
+    if os.path.exists(MODELS_DIR):
+        shutil.rmtree(MODELS_DIR)
+    
+    py_vncorenlp.download_model(save_dir=VNCORENLP_DIR)
+
     return VnCoreNLP(save_dir=VNCORENLP_DIR, annotators=["wseg"])
 model = load_model()
 
