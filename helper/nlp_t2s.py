@@ -5,7 +5,7 @@ import streamlit as st
 
 CURR_DIR = os.path.dirname(os.path.abspath(__file__))
 BASE_DIR = os.path.dirname(CURR_DIR)
-VNCORENLP_DIR = os.path.join(BASE_DIR, "VnCoreNLP", "VnCoreNLP")
+VNCORENLP_DIR = os.path.join(BASE_DIR, "vncorenlp", "VnCoreNLP")
 MODELS_DIR = os.path.join(VNCORENLP_DIR, "models")
 JAR_PATH = os.path.join(VNCORENLP_DIR, "VnCoreNLP-1.2.jar")
 
@@ -17,7 +17,7 @@ if os.name == "nt":
 def load_model():
     if not os.path.isdir(MODELS_DIR) or not os.path.exists(JAR_PATH):
         raise FileNotFoundError(
-            "Missing VnCoreNLP bundle. Ensure helper can see VnCoreNLP/VnCoreNLP/ with models/ and VnCoreNLP-1.2.jar."
+            "Missing VnCoreNLP bundle. Ensure the repo contains vncorenlp/VnCoreNLP/ with models/ and VnCoreNLP-1.2.jar."
         )
     return VnCoreNLP(save_dir=VNCORENLP_DIR, annotators=["wseg"])
 
