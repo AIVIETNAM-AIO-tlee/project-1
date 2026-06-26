@@ -7,7 +7,6 @@ import streamlit as st
 try:
     if "OLLAMA_HOST" in st.secrets:
         os.environ["OLLAMA_HOST"] = st.secrets["OLLAMA_HOST"]
-        os.environ["OLLAMA_HEADERS"] = '{"ngrok-skip-browser-warning": "true"}'
 except Exception:
     pass
 
@@ -29,6 +28,11 @@ class rag_architecture:
     def __init__(self, llm_model=LLM_MODEL, embedding_model=EMBEDDING_MODEL):
         self.llm_model = llm_model
         self.embedding_model = embedding_model
+        ollama_host = os.getenv("OLLAMA_HOST", None)
+        self.ollama_client = ollama.Client(
+            host=ollama_host,
+            headers={"ngrok-skip-browser-warning": "true"},
+        )
         self.client = chromadb.Client()
         self.collection = self.client.get_or_create_collection("rag_collection")
 
@@ -55,8 +59,7 @@ class rag_architecture:
 
     def embed_text(self, texts):
         # Tạo embedding cho văn bản
-        embedding = ollama.embed(model=self.embedding_model,input=texts,)['embeddings']
-
+        embedding = self.ollama_client.embed(model=self.embedding_model, input=texts)['embeddings']
         return embedding
     
     def read_file(self, file):
@@ -84,12 +87,20 @@ class rag_architecture:
         query = self.collection.query(query_embeddings=self.embed_text([question]), n_results=top_k)
 
         context = "\n".join(query["documents"][0])
-        response = ollama.chat(
+        response = self.ollama_client.chat(
             model=LLM_MODEL,
             messages=[{
                 "role":"user",
                 "content": PROMPT.format(context=context, question=question),
                 }],
             options={"temperature":0},
+        )
+        return response.message.content
+
+    def chat(self, message):
+        response = self.ollama_client.chat(
+            model=self.llm_model,
+            messages=[{"role": "user", "content": message}],
+            options={"temperature": 0},
         )
         return response.message.content

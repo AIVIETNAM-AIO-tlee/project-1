@@ -1,6 +1,5 @@
 import streamlit as st
 import helper.basic_rag
-import ollama
 
 # tạo object RAG
 @st.cache_resource
@@ -58,12 +57,7 @@ if user_question:
                     answer = rag.retrieval(user_text)
                 else:
                     # trường hợp PDF mà người dùng chưa gửi câu hỏi thì AI tóm tắt giúp.
-                    res = ollama.chat(
-                        model=rag.llm_model,
-                        messages=[{"role": "user", "content": user_text if user_text else "Tóm tắt tài liệu vừa gửi"}]
-                    )
-                    print(res)
-                    answer = res['message']['content']
+                    answer = rag.chat(user_text if user_text else "Tóm tắt tài liệu vừa gửi")
 
                 st.write(answer)
         
