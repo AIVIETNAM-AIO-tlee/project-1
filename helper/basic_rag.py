@@ -96,11 +96,3 @@ class rag_architecture:
             options={"temperature":0},
         )
         return response.message.content
-
-    def chat(self, message):
-        response = self.ollama_client.chat(
-            model=self.llm_model,
-            messages=[{"role": "user", "content": message}],
-            options={"temperature": 0},
-        )
-        return response.message.content
