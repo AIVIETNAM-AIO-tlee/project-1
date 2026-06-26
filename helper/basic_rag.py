@@ -2,8 +2,10 @@ import pypdf
 import chromadb
 import ollama
 import os
+import streamlit as st
 
-os.environ["OLLAMA_HOST"] = "https://late-yarn-unsheathe.ngrok-free.dev"
+if "OLLAMA_HOST" in st.secrets:
+    os.environ["OLLAMA_HOST"] = st.secrets["OLLAMA_HOST"]
 
 LLM_MODEL = "vicuna:7b-v1.5-q5_1"
 EMBEDDING_MODEL = "bge-m3:latest"
