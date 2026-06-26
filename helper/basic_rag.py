@@ -4,8 +4,12 @@ import ollama
 import os
 import streamlit as st
 
-if "OLLAMA_HOST" in st.secrets:
-    os.environ["OLLAMA_HOST"] = st.secrets["OLLAMA_HOST"]
+try:
+    if "OLLAMA_HOST" in st.secrets:
+        os.environ["OLLAMA_HOST"] = st.secrets["OLLAMA_HOST"]
+        os.environ["OLLAMA_HEADERS"] = '{"ngrok-skip-browser-warning": "true"}'
+except Exception:
+    pass
 
 LLM_MODEL = "vicuna:7b-v1.5-q5_1"
 EMBEDDING_MODEL = "bge-m3:latest"
