@@ -52,8 +52,12 @@ if user_question:
     if user_text or user_file:
         with st.chat_message(name="ai"):
             with st.spinner("Đang suy nghĩ..."):
-
-                answer = rag.retrieval(user_text if user_text else "Tóm tắt tài liệu vừa gửi")
+                
+                if "collection" in st.session_state and st.session_state.collection is not None:
+                    answer = rag.retrieval(user_text)
+                else:
+                    # trường hợp PDF mà người dùng chưa gửi câu hỏi thì AI tóm tắt giúp.
+                    answer = rag.retrieval(user_text if user_text else "Tóm tắt tài liệu vừa gửi")
 
                 st.write(answer)
         
