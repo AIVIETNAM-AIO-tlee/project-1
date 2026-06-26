@@ -20,7 +20,7 @@ with st.expander("Một số câu ví dụ mẫu"):
 
 text = st.text_area("Nhập văn bản tiếng Việt", height=100, placeholder="Test thử đi nèee...")
 
-if st.button("😼"):
+if st.button("Bấm để thấy magic 😼"):
     if text:
 
         with st.spinner("Đang chuyển văn bản thành âm thanh...", show_time=True):
@@ -30,9 +30,9 @@ if st.button("😼"):
 
             proceed_sentences = flatten_to_text(tokens)
             file = text_to_speech(proceed_sentences)
-            st.write(proceed_sentences)
-            st.success("Chuyển văn bản thành công", title="Thành công",)
-            st.audio(file)
+        st.write(proceed_sentences)
+        st.success("Chuyển văn bản thành công", title="Thành công",)
+        st.audio(file)
 
     else: 
         st.warning("Bạn quên nhập text kìa !!!", icon="😹")
