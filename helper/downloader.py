@@ -10,7 +10,7 @@ VNCORENLP_DIR = os.path.join(BASE_DIR, "vncorenlp", "VnCoreNLP")
 MODELS_DIR = os.path.join(VNCORENLP_DIR, "models")
 JAR_PATH = os.path.join(VNCORENLP_DIR, "VnCoreNLP-1.2.jar")
 
-REMOTE_BASE = "https://github.com/vncorenlp/VnCoreNLP.git"
+REMOTE_BASE = "https://raw.githubusercontent.com/vncorenlp/VnCoreNLP/master"
 
 def _download_file(url, destination):
     Path(destination).parent.mkdir(parents=True, exist_ok=True)
